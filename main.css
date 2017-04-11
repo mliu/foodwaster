@@ -36,22 +36,11 @@ body {
     padding: 50px 0px;
 }
 
+#wot {
+    height: 400px;
+}
+
 /* D3 */
-
-.svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 40%; /* aspect ratio */
-    vertical-align: top;
-    overflow: hidden;
-}
-.svg-content-responsive {
-    display: inline-block;
-    position: absolute;
-    left: 0;
-}
-
 .axis text {
   font: 10px sans-serif;
 }
@@ -61,6 +50,10 @@ body {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+.grid line {
+    stroke: #ddd;
 }
 
 /* Override bootstrap */

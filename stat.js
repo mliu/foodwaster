@@ -1,13 +1,11 @@
 (function() {
     'use strict';
 
-    var margin = {top: 20, right: 0, bottom: 30, left: 40},
-        wot_width = 1000,
-        wot_height = 400,
-
+    var margin = {top: 0, right: 10, bottom: 40, left: 50},
+        wot_width = document.getElementById("wot").offsetWidth - margin.left - margin.right,
+        wot_height = document.getElementById("wot").offsetHeight - margin.top - margin.bottom,
         BASE_DATA = {
             chicken_weight: 4,
-
         };
 
     var data = [
@@ -25,37 +23,60 @@
         }
     ]
 
+    function resize_graphs () {
+        // Resize WOT graph
+        wot_width = document.getElementById("wot").offsetWidth - margin.left - margin.right;
+        wot_svg.attr("width", wot_width + margin.left + margin.right);
+        wotX.range([0, wot_width]);
+        wot.select(".x.axis")
+            .call(wotXAxis);
+
+        var gridlines = d3.axisBottom()
+            .tickFormat("")
+            .tickSize(-wot_height)
+            .scale(wotX);
+        wotGrid.call(gridlines);
+    }
+    d3.select(window).on('resize.updatesvg', resize_graphs);
+
     // WASTE OVER TIME GRAPH
-    var wot = d3.select("div#wot")
-        .append("div")
-            .classed("svg-container", true) //container class to make it responsive
-        .append("svg")
-            //responsive SVG needs these 2 attributes and no width and height attr
-            .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", margin.left + " " + margin.top + " " + (wot_width) + " " + (wot_height))
-            .attr("transform", "translate(" + margin.left + "," + margin.right + ")")
-            //class to make it responsive
-            .classed("svg-content-responsive", true)
+    var wot, wot_svg, wotY, wotX, wotXAxis, wotYAxis, wotGrid;
+    function build_wot () {
+        wot_svg = d3.select("svg#wot_svg")
+                .attr("width", wot_width + margin.left + margin.right)
+                .attr("height", wot_height + margin.top + margin.bottom)
+        wot = wot_svg.append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var y = d3.scaleOrdinal()
-        .range([wot_height, 0]);
+        wotX = d3.scaleLinear()
+            .domain([0, d3.max(data, function(d) { return d.weight })])
+            .range([0, wot_width]);
+        wotXAxis = d3.axisBottom()
+            .scale(wotX)
+        wot.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + wot_height + ")")
+            .call(wotXAxis);
+        // Draw x gridlines
+        var gridlines = d3.axisBottom()
+            .tickFormat("")
+            .tickSize(-wot_height)
+            .tickSizeOuter(0)
+            .scale(wotX);
+        wotGrid = wot.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(0," + wot_height + ")")
+            .call(gridlines);
 
-    //.domain(data.map(function(d) { return d.time; }))
-    var x = d3.scaleLinear()
-        .range([0, wot_width]);
+        wotY = d3.scaleBand()
+            .rangeRound([wot_height, 0])
+            .domain(data.map(function(d) { return (d.time).toUpperCase(); }));
+        wotYAxis = d3.axisLeft()
+            .scale(wotY)
+        wot.append("g")
+            .attr("class", "y axis")
+            .call(wotYAxis);
 
-    var xAxis = d3.axisBottom()
-        .scale(x)
-
-    var yAxis = d3.axisLeft()
-        .scale(y)
-
-    wot.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + wot_height + ")")
-        .call(xAxis);
-
-    wot.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
+    }
+    build_wot();
 })();
