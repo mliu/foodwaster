@@ -1,0 +1,79 @@
+/* Main styling*/
+
+body {
+	background: #292b35;
+    font-size: 15px;
+}
+
+.arvo {
+    font-family: 'Arvo', serif;
+}
+
+.blue-callout {
+    border-left: 5px solid #337ab7;
+    padding: 5px 12px;
+}
+
+.logo>img {
+    margin-bottom: 25px;
+    margin-left: 5px;
+}
+
+.main {
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    font-size: 18px;
+    padding-bottom: 50px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.footer {
+    margin-left: -15px;
+    margin-right: -15px;
+    background: #424656;
+    color: #888;
+    padding: 50px 0px;
+}
+
+/* D3 */
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 40%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+/* Override bootstrap */
+
+.nav-tabs {
+    border-bottom: 1px solid #fff;
+    padding-left: 10px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+	font-weight: bold;
+}
