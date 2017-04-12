@@ -42,18 +42,26 @@ body {
 
 /* D3 */
 .axis text {
-  font: 10px sans-serif;
+    font: 10px sans-serif;
 }
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
 }
 
 .grid line {
     stroke: #ddd;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.axis text {
+    font-size: 15px;
 }
 
 /* Override bootstrap */

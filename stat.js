@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var margin = {top: 0, right: 10, bottom: 40, left: 50},
+    var margin = {top: 0, right: 10, bottom: 40, left: 64},
         wot_width = document.getElementById("wot").offsetWidth - margin.left - margin.right,
         wot_height = document.getElementById("wot").offsetHeight - margin.top - margin.bottom,
         BASE_DATA = {
@@ -15,11 +15,11 @@
         },
         {
             'time': 'month',
-            'weight': 37
+            'weight': 16
         },
         {
             'time': 'year',
-            'weight': 432
+            'weight': 208
         }
     ]
 
@@ -34,6 +34,7 @@
         var gridlines = d3.axisBottom()
             .tickFormat("")
             .tickSize(-wot_height)
+            .tickSizeOuter(0)
             .scale(wotX);
         wotGrid.call(gridlines);
     }
@@ -49,10 +50,11 @@
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         wotX = d3.scaleLinear()
-            .domain([0, d3.max(data, function(d) { return d.weight })])
+            .domain([0, d3.max(data, function(d) { return d.weight }) * 1.1])
             .range([0, wot_width]);
         wotXAxis = d3.axisBottom()
             .scale(wotX)
+            .tickSizeOuter(0)
         wot.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + wot_height + ")")
@@ -69,14 +71,42 @@
             .call(gridlines);
 
         wotY = d3.scaleBand()
-            .rangeRound([wot_height, 0])
-            .domain(data.map(function(d) { return (d.time).toUpperCase(); }));
+            .rangeRound([0, wot_height])
+            .domain(data.map(function(d) { return d.time.toUpperCase(); }))
+            .padding(0.5);
         wotYAxis = d3.axisLeft()
             .scale(wotY)
         wot.append("g")
             .attr("class", "y axis")
             .call(wotYAxis);
 
+        var divs = wot.selectAll('.bar')
+            .data(data)
+            .enter();
+
+        // Add rectangles
+        divs.append('rect')
+            .attr("class", "bar")
+            .attr("x", 1)
+            .attr("width", 0)
+            .attr("y", function(d) { return wotY(d.time.toUpperCase()); })
+            .attr("height", wotY.bandwidth())
+            .transition()
+                .delay(function(d, i) { return i * 300; })
+                .duration(700)
+                .attr("width", function(d) { return wotX(d.weight); })
+
+        // Add text
+        divs.append('text')
+            .attr("x", 0)
+            .attr("y", function(d) { return wotY(d.time.toUpperCase()) + 6 + wotY.bandwidth() / 2; })
+            .attr("opacity", 0)
+            .text(function(d) { return d.weight + " lbs"; })
+            .transition()
+                .delay(function(d, i) { return i * 300; })
+                .duration(700)
+                .attr("opacity", 1)
+                .attr("x", function(d) { return wotX(d.weight) + 15; })
     }
     build_wot();
 })();
