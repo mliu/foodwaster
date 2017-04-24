@@ -40,6 +40,20 @@ body {
     height: 400px;
 }
 
+.icon-container {
+    padding-left: 40px;
+    margin: 20px 0px;
+}
+
+.icon {
+    margin-left: -40px;
+    opacity: 0;
+}
+
+.big-text {
+    font-size: 25px;
+}
+
 /* D3 */
 .axis text {
     font: 10px sans-serif;
@@ -62,6 +76,11 @@ body {
 
 .axis text {
     font-size: 15px;
+    font-weight: bold;
+}
+
+text.num {
+    font-size: 23px;
 }
 
 /* Override bootstrap */

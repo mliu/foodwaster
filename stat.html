@@ -9,6 +9,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="main.css"/>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
 </head>
 <body>
     <div class="container" style="padding-top: 30px;background: #2f323d">
@@ -26,7 +28,7 @@
                     <h2 class="arvo blue-callout" style="margin: 30px 0px;">
                         <strong>YOUR FOOD WASTE RESULTS</strong>
                     </h2>
-                    <p>You threw away around <strong id="amount">[AMOUNT]</strong> pounds of food yesterday. Doesn't seem like a lot but how does that add up over time?</p>
+                    <p>You threw away around <strong id="amount-text" class="big-text">N/A</strong> pounds of food yesterday. Doesn't seem like a lot but how does that add up over time?</p>
                     <br>
                     <p class="arvo text-center">
                         Food Waste Over Time
@@ -36,16 +38,19 @@
                     </div>
                     <p class="arvo  text-center"><small>Food wasted (pounds)</small></p>
                     <br>
-                    <p>In one year you throw away over <strong id="yr_amount">[YEAR_AMOUNT]</strong> pounds of food! In other words, you throw away around...</p>
-                    <p>[CHICKEN] whole chickens or...</p>
+                    <p>In one year you throw away over <strong id="waste-year-amount-text" class="big-text">N/A</strong> pounds of food! In other words, you throw away around...</p>
+                    <p><strong id="chicken-year-text" class="big-text">N/A</strong> whole chickens or...</p>
+                    <div class="icon-container" id="chicken_icons"></div>
 
-                    <p>[BANANAS] bananas or...</p>
+                    <p><strong id="banana-year-text" class="big-text">N/A</strong> bundles of   bananas or...</p>
+                    <div class="icon-container" id="banana_icons"></div>
 
-                    <p>[BURGERS] hamburgers!</p>
+                    <p><strong id="burger-year-text" class="big-text">N/A</strong> burgers!</p>
+                    <div class="icon-container" id="burger_icons"></div>
                     
-                    <p>If you add up the costs, you throw away around [DOLLARS] dollars into the trash!</p>
-                    <p>If you donated that food, you could feed someone for [DAYS] entire days. Breakfast, lunch, and dinner!</p>
-                    <p>About 1/3 of all the food made in the world is thrown out. See how things could be different:</p>
+                    <p>If you add up the costs, you throw away around <strong id="money-text" class="big-text">N/A</strong> dollars into the trash!</p>
+                    <p>If you donated that food, you could feed someone for <strong id="feed-text" class="big-text">N/A</strong> entire days. Breakfast, lunch, and dinner!</p>
+                    <p>About <strong class="big-text">1/3</strong> of all the food made in the world is thrown out. See how things could be different:</p>
                     <br>
                     <div class="text-center"><button class="btn btn-lg btn-success arvo">WATCH VIDEO</button></div>
                 </div>

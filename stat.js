@@ -6,6 +6,8 @@
         wot_height = document.getElementById("wot").offsetHeight - margin.top - margin.bottom,
         BASE_DATA = {
             chicken_weight: 4,
+            banana_weight: 2.4,
+            burger_weight: 0.333,
         };
 
     var data = [
@@ -22,6 +24,57 @@
             'weight': 208
         }
     ]
+
+    function set_text () {
+
+    }
+
+    function add_icons () {
+        // Prevent a ton of icons being displayed
+        var max;
+
+        max = Math.min((data[data.length - 1].weight / BASE_DATA.chicken_weight), 100);
+        for (var i = 0; i < max; i++) {
+            $("#chicken_icons").append("<img class='icon chicken' src='chicken.png'/>");
+        }
+
+        max = Math.min((data[data.length - 1].weight / BASE_DATA.banana_weight), 100);
+        for (var i = 0; i < max; i++) {
+            $("#banana_icons").append("<img class='icon banana' src='banana.png'/>");
+        }
+
+        max = Math.min((data[data.length - 1].weight / BASE_DATA.burger_weight), 100);
+        for (var i = 0; i < max; i++) {
+            $("#burger_icons").append("<img class='icon burger' src='burger.png'/>");
+        }
+    }
+    add_icons();
+
+    function fadein_icons (mDiv) {
+        $(mDiv).each(function (idx, el) {
+            $(el).animate({
+                opacity: 1,
+            }, Math.log(idx + 1) * 250);
+        });
+    }
+
+    $("#chicken_icons").waypoint(function () {
+        fadein_icons(".icon.chicken");
+    }, {
+        offset: '70%'
+    });
+
+    $("#banana_icons").waypoint(function () {
+        fadein_icons(".icon.banana");
+    }, {
+        offset: '70%'
+    });
+
+    $("#burger_icons").waypoint(function () {
+        fadein_icons(".icon.burger");
+    }, {
+        offset: '70%'
+    });
 
     function resize_graphs () {
         // Resize WOT graph
@@ -55,6 +108,7 @@
         wotXAxis = d3.axisBottom()
             .scale(wotX)
             .tickSizeOuter(0)
+            .ticks(4)
         wot.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + wot_height + ")")
@@ -64,6 +118,7 @@
             .tickFormat("")
             .tickSize(-wot_height)
             .tickSizeOuter(0)
+            .ticks(4)
             .scale(wotX);
         wotGrid = wot.append("g")
             .attr("class", "grid")
@@ -98,8 +153,9 @@
 
         // Add text
         divs.append('text')
+            .attr("class", "num")
             .attr("x", 0)
-            .attr("y", function(d) { return wotY(d.time.toUpperCase()) + 6 + wotY.bandwidth() / 2; })
+            .attr("y", function(d) { return wotY(d.time.toUpperCase()) + 7 + wotY.bandwidth() / 2; })
             .attr("opacity", 0)
             .text(function(d) { return d.weight + " lbs"; })
             .transition()
