@@ -8,25 +8,19 @@
             chicken_weight: 4,
             banana_weight: 2.4,
             burger_weight: 0.333,
+            human_amt: 5.46
         };
 
-    var data = [
-        {
-            'time': 'week',
-            'weight': 4
-        },
-        {
-            'time': 'month',
-            'weight': 16
-        },
-        {
-            'time': 'year',
-            'weight': 208
-        }
-    ]
+    var data;
 
-    function set_text () {
-
+    function set_text (d) {
+        $("#amount-text").text(d['day']);
+        $("#waste-year-amount-text").text(data[data.length - 1].weight);
+        $("#chicken-year-text").text(Math.round((data[data.length - 1].weight / BASE_DATA.chicken_weight)));
+        $("#banana-year-text").text(Math.round((data[data.length - 1].weight / BASE_DATA.banana_weight)));
+        $("#burger-year-text").text(Math.round((data[data.length - 1].weight / BASE_DATA.burger_weight)));
+        $("#money-text").text(d['money']);
+        $("#feed-text").text(Math.round((data[data.length - 1].weight / BASE_DATA.human_amt)));
     }
 
     function add_icons () {
@@ -48,7 +42,6 @@
             $("#burger_icons").append("<img class='icon burger' src='burger.png'/>");
         }
     }
-    add_icons();
 
     function fadein_icons (mDiv) {
         $(mDiv).each(function (idx, el) {
@@ -57,24 +50,6 @@
             }, Math.log(idx + 1) * 250);
         });
     }
-
-    $("#chicken_icons").waypoint(function () {
-        fadein_icons(".icon.chicken");
-    }, {
-        offset: '70%'
-    });
-
-    $("#banana_icons").waypoint(function () {
-        fadein_icons(".icon.banana");
-    }, {
-        offset: '70%'
-    });
-
-    $("#burger_icons").waypoint(function () {
-        fadein_icons(".icon.burger");
-    }, {
-        offset: '70%'
-    });
 
     function resize_graphs () {
         // Resize WOT graph
@@ -164,5 +139,52 @@
                 .attr("opacity", 1)
                 .attr("x", function(d) { return wotX(d.weight) + 15; })
     }
-    build_wot();
+
+    function getData() {
+        var tempdata = {
+                'day': .571,
+                'week': 4,
+                'month': 16,
+                'year': 208,
+                'money': 544
+            };
+            
+        data = [
+            {
+                'time': 'week',
+                'weight': tempdata['week']
+            },
+            {
+                'time': 'month',
+                'weight': tempdata['month']
+            },
+            {
+                'time': 'year',
+                'weight': tempdata['year']
+            }
+        ];
+
+        build_wot();
+        set_text(tempdata);
+        add_icons();
+
+        $("#chicken_icons").waypoint(function () {
+            fadein_icons(".icon.chicken");
+        }, {
+            offset: '70%'
+        });
+
+        $("#banana_icons").waypoint(function () {
+            fadein_icons(".icon.banana");
+        }, {
+            offset: '70%'
+        });
+
+        $("#burger_icons").waypoint(function () {
+            fadein_icons(".icon.burger");
+        }, {
+            offset: '70%'
+        });
+    }
+    getData();
 })();
